@@ -34,7 +34,7 @@ class DashboardScreen extends StatelessWidget {
             children: [
               // Greeting Section
               const Text(
-                'Hello, Suman Khadka',
+                'Hello, Pradip Lamsal',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
@@ -82,7 +82,7 @@ class DashboardScreen extends StatelessWidget {
                       fees: '\$50,706 | ₹42.85L',
                       scores: 'GRE: 317',
                       image:
-                          'assets/texas.jpg', // Replace with a valid image path
+                          'assets/images/texas.jpg', // Replace with a valid image path
                     ),
                     _buildCollegeCard(
                       name: 'University of Southern California',
@@ -90,7 +90,7 @@ class DashboardScreen extends StatelessWidget {
                       fees: '\$40,688 | ₹34.38L',
                       scores: 'GRE: 317.5, GMAT: 707',
                       image:
-                          'assets/usc.jpg', // Replace with a valid image path
+                          'assets/images/california.jpg', // Replace with a valid image path
                     ),
                   ],
                 ),
@@ -98,12 +98,12 @@ class DashboardScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Partner Universities Section
-              Text(
+              const Text(
                 'Partner Universities in USA',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
-              Container(
+              const SizedBox(height: 8),
+              SizedBox(
                 height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -114,7 +114,7 @@ class DashboardScreen extends StatelessWidget {
                       fees: '\$30,000 | ₹26.50L',
                       scores: 'GRE: 300',
                       image:
-                          'assets/asu.jpg', // Replace with a valid image path
+                          'assets/images/arizona.jpg', // Replace with a valid image path
                     ),
                     _buildCollegeCard(
                       name: 'New Jersey Institute of Technology',
@@ -122,7 +122,7 @@ class DashboardScreen extends StatelessWidget {
                       fees: '\$35,000 | ₹31.00L',
                       scores: 'GRE: 310',
                       image:
-                          'assets/njit.jpg', // Replace with a valid image path
+                          'assets/images/newjersey.jpg', // Replace with a valid image path
                     ),
                   ],
                 ),
@@ -141,8 +141,8 @@ class DashboardScreen extends StatelessWidget {
   }) {
     return Container(
       width: 250,
-      margin: EdgeInsets.only(right: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.only(right: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(12),
@@ -152,9 +152,9 @@ class DashboardScreen extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Spacer(),
+          const Spacer(),
           Text('Counselor: $counselor'),
         ],
       ),
@@ -170,7 +170,7 @@ class DashboardScreen extends StatelessWidget {
   }) {
     return Container(
       width: 250,
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
@@ -178,7 +178,8 @@ class DashboardScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
                   image,
                   fit: BoxFit.cover,
@@ -193,13 +194,14 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(location, style: TextStyle(color: Colors.grey[600])),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(fees, style: TextStyle(color: Colors.green[600])),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(scores, style: TextStyle(color: Colors.grey[600])),
                 ],
               ),

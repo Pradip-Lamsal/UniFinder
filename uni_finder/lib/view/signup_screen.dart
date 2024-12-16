@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
-    );
-  }
-}
+import 'package:uni_finder/view/login_screen.dart'; // Import your LoginScreen
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -123,11 +108,19 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Already have account? ",
+                  "Already have an account? ",
                   style: TextStyle(color: Colors.grey),
                 ),
                 GestureDetector(
-                  onTap: () {}, // Handle login navigation here
+                  onTap: () {
+                    // Navigate to LoginScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Log In',
                     style: TextStyle(color: Colors.blueAccent),

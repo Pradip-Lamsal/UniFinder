@@ -1,20 +1,6 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
-}
+import 'package:uni_finder/view/dashboard.dart';
+import 'package:uni_finder/view/signup_screen.dart'; // Import the SignUpScreen
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -30,7 +16,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             // Logo
             Image.asset(
-              'assets/images/logo.png', // Path to your logo image
+              'assets/images/image copy.png', // Path to your logo image
               height: 100,
             ),
             const SizedBox(height: 20),
@@ -102,7 +88,16 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             // Login Button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Navigate to Dashboard
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const UniFinderApp(), // Replace with your Dashboard widget
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
@@ -126,7 +121,16 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ),
                 GestureDetector(
-                  onTap: () {}, // Handle sign-up logic here
+                  onTap: () {
+                    // Navigate to SignUpScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const SignUpScreen(), // Replace with your SignUpScreen widget
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Sign Up',
                     style: TextStyle(color: Colors.blueAccent),
