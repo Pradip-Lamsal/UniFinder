@@ -1,9 +1,9 @@
+import 'package:bus_application/view/dashboard.dart';
+import 'package:bus_application/view/login_screen.dart';
+import 'package:bus_application/view/onboarding_screen.dart';
+import 'package:bus_application/view/signup_screen.dart';
+import 'package:bus_application/view/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_finder/view/dashboard.dart';
-import 'package:uni_finder/view/login_screen.dart';
-import 'package:uni_finder/view/onboarding_screen.dart';
-import 'package:uni_finder/view/signup_screen.dart';
-import 'package:uni_finder/view/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

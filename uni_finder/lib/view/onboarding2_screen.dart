@@ -1,6 +1,6 @@
+import 'package:bus_application/view/login_screen.dart';
+import 'package:bus_application/view/onboard3_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_finder/view/login_screen.dart';
-import 'package:uni_finder/view/onboard3_screen.dart';
 
 class OnboardingScreen2 extends StatelessWidget {
   const OnboardingScreen2({super.key});
