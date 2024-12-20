@@ -118,7 +118,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const Text(
                   "Don’t have account? ",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Color.fromARGB(255, 250, 250, 250)),
                 ),
                 GestureDetector(
                   onTap: () {
