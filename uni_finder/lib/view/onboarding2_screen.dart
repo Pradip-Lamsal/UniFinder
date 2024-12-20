@@ -1,6 +1,6 @@
-import 'package:bus_application/view/login_screen.dart';
-import 'package:bus_application/view/onboard3_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'onboard3_screen.dart';
 
 class OnboardingScreen2 extends StatelessWidget {
   const OnboardingScreen2({super.key});
@@ -38,7 +38,7 @@ class OnboardingScreen2 extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
+                            builder: (context) => const OnboardingScreen3()),
                       );
                     },
                     child: const Text(
@@ -55,7 +55,7 @@ class OnboardingScreen2 extends StatelessWidget {
 
               // Center Image
               Image.asset(
-                'assets/images/onboard_image6.png',
+                "assets/images/onboard_image6.jpg",
                 height: 200,
               ),
 

@@ -1,6 +1,7 @@
-import 'package:bus_application/view/dashboard.dart';
-import 'package:bus_application/view/signup_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'dashboard.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             // App Name
             const Text(
-              'Unifinder',
+              'UniFinder',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -42,7 +43,8 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 10),
             // Subtitle Text
             const Text(
-              'Use Credentials to access your account',
+              'Use your credentials to access your account.',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
@@ -78,9 +80,11 @@ class LoginScreen extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Add functionality for forgot password
+                },
                 child: const Text(
-                  'Forget Password?',
+                  'Forgot Password?',
                   style: TextStyle(color: Colors.blueAccent),
                 ),
               ),
@@ -93,8 +97,7 @@ class LoginScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const UniFinderApp(), // Replace with your Dashboard widget
+                    builder: (context) => const DashboardScreen(),
                   ),
                 );
               },
@@ -117,8 +120,8 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Don’t have account? ",
-                  style: TextStyle(color: Color.fromARGB(255, 250, 250, 250)),
+                  "Don’t have an account? ",
+                  style: TextStyle(color: Colors.black),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -126,14 +129,16 @@ class LoginScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const SignUpScreen(), // Replace with your SignUpScreen widget
+                        builder: (context) => const SignUpScreen(),
                       ),
                     );
                   },
                   child: const Text(
                     'Sign Up',
-                    style: TextStyle(color: Colors.blueAccent),
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

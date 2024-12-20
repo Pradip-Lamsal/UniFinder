@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const UniFinderApp());
-}
+import 'profile_page.dart';
+import 'universities_page.dart';
 
-class UniFinderApp extends StatelessWidget {
-  const UniFinderApp({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DashboardScreen(),
-    );
-  }
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
+
+  // Pages corresponding to each tab
+  final List<Widget> _pages = [
+    const HomePage(),
+    const UniversitiesPage(), // Updated to use the new UniversitiesPage
+    const ProfilePage(),
+  ];
+
+  // Update the selected index
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,109 +34,103 @@ class DashboardScreen extends StatelessWidget {
         title: const Text('UniFinder Dashboard'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Greeting Section
-              const Text(
-                'Hello, Pradip Lamsal',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Explore universities based on your preferences.',
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
-              const SizedBox(height: 16),
-
-              // Scholarship Section
-              SizedBox(
-                height: 150,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildScholarshipCard(
-                      title: '100% SEVIS fee scholarship for USA',
-                      counselor: 'Ditipriya Ch.',
-                      backgroundColor: Colors.orange[100]!,
-                    ),
-                    _buildScholarshipCard(
-                      title: '50% visa scholarship for UK',
-                      counselor: 'Rohit S.',
-                      backgroundColor: Colors.blue[100]!,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Most Preferred Colleges Section
-              const Text(
-                'Most Preferred Colleges',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildCollegeCard(
-                      name: 'University of Texas',
-                      location: 'Richardson, Texas',
-                      fees: '\$50,706 | ₹42.85L',
-                      scores: 'GRE: 317',
-                      image:
-                          'assets/images/texas.jpg', // Replace with a valid image path
-                    ),
-                    _buildCollegeCard(
-                      name: 'University of Southern California',
-                      location: 'Los Angeles, California',
-                      fees: '\$40,688 | ₹34.38L',
-                      scores: 'GRE: 317.5, GMAT: 707',
-                      image:
-                          'assets/images/california.jpg', // Replace with a valid image path
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Partner Universities Section
-              const Text(
-                'Partner Universities in USA',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildCollegeCard(
-                      name: 'Arizona State University',
-                      location: 'Tempe, Arizona',
-                      fees: '\$30,000 | ₹26.50L',
-                      scores: 'GRE: 300',
-                      image:
-                          'assets/images/arizona.jpg', // Replace with a valid image path
-                    ),
-                    _buildCollegeCard(
-                      name: 'New Jersey Institute of Technology',
-                      location: 'Newark, New Jersey',
-                      fees: '\$35,000 | ₹31.00L',
-                      scores: 'GRE: 310',
-                      image:
-                          'assets/images/newjersey.jpg', // Replace with a valid image path
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      body: _pages[_selectedIndex], // Display the selected page
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Universities',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Hello, Pradip Lamsal',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Explore universities based on your preferences.',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 16),
+
+            // Scholarship Section
+            SizedBox(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildScholarshipCard(
+                    title: '100% SEVIS fee scholarship for USA',
+                    counselor: 'Ditipriya Ch.',
+                    backgroundColor: Colors.orange[100]!,
+                  ),
+                  _buildScholarshipCard(
+                    title: '50% visa scholarship for UK',
+                    counselor: 'Rohit S.',
+                    backgroundColor: Colors.blue[100]!,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Most Preferred Colleges Section
+            const Text(
+              'Most Preferred Colleges',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 200,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildCollegeCard(
+                    name: 'University of Texas',
+                    location: 'Richardson, Texas',
+                    fees: '\$50,706 | ₹42.85L',
+                    scores: 'GRE: 317',
+                    image:
+                        'assets/images/texas.jpg', // Replace with a valid image path
+                  ),
+                  _buildCollegeCard(
+                    name: 'University of Southern California',
+                    location: 'Los Angeles, California',
+                    fees: '\$40,688 | ₹34.38L',
+                    scores: 'GRE: 317.5, GMAT: 707',
+                    image:
+                        'assets/images/california.jpg', // Replace with a valid image path
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
