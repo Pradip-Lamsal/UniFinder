@@ -1,19 +1,18 @@
-import 'package:bus_application/view/splash_screen.dart';
 import 'package:flutter/material.dart';
-// Import the Onboarding Screen
 
-void main() {
-  runApp(const MyApp());
-}
+import 'app/app.dart';
+import 'app/di/di.dart';
+import 'core/network/hive_service.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HiveService.init();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(), // Starting with the Onboarding Screen
-    );
-  }
+  // await HiveService().clearStudentBox();
+
+  await initDependencies();
+
+  runApp(
+    const App(),
+  );
 }
