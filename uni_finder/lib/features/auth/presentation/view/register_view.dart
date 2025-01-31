@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../view_model/signup/register_bloc.dart';
 
@@ -17,7 +21,64 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _obscurePassword = true; // To toggle password visibility
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  bool _obscurePassword = true;
+  File? _profileImage;
+
+  Future<void> _checkCameraPermission() async {
+    if (await Permission.camera.request().isDenied) {
+      await Permission.camera.request();
+    }
+  }
+
+  Future<void> _browseImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image != null) {
+        setState(() {
+          _profileImage = File(image.path);
+        });
+      }
+    } catch (e) {
+      debugPrint("Error selecting image: $e");
+    }
+  }
+
+  void _showImageSourceSelector() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () async {
+                await _checkCameraPermission();
+                await _browseImage(ImageSource.camera);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.camera),
+              label: const Text("Camera"),
+            ),
+            ElevatedButton.icon(
+              onPressed: () async {
+                await _browseImage(ImageSource.gallery);
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.image),
+              label: const Text("Gallery"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +98,22 @@ class _RegisterViewState extends State<RegisterView> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.all(24),
           child: Form(
             key: _key,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 10),
-                // Reduced Logo Size
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    width: size.width * 0.35,
-                    height: size.width * 0.35,
-                    fit: BoxFit.contain,
+                InkWell(
+                  onTap: _showImageSourceSelector,
+                  child: CircleAvatar(
+                    radius: size.width * 0.15,
+                    backgroundImage: _profileImage != null
+                        ? FileImage(_profileImage!)
+                        : const AssetImage('assets/images/logo.png')
+                            as ImageProvider,
+                    child: _profileImage == null
+                        ? const Icon(Icons.camera_alt, size: 50)
+                        : null,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -69,145 +131,64 @@ class _RegisterViewState extends State<RegisterView> {
                   style: TextStyle(fontSize: 14, color: Colors.black54),
                 ),
                 const SizedBox(height: 30),
-                // First Name Field
-                TextFormField(
+                _buildTextField(
                   controller: _fnameController,
-                  decoration: InputDecoration(
-                    labelText: "First Name",
-                    prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blueGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Color(0xFF3E4095)),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter your first name';
-                    }
-                    return null;
-                  },
+                  labelText: "First Name",
+                  icon: Icons.person_outline,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter your first name'
+                      : null,
                 ),
                 const SizedBox(height: 20),
-                // Last Name Field
-                TextFormField(
+                _buildTextField(
                   controller: _lnameController,
-                  decoration: InputDecoration(
-                    labelText: "Last Name",
-                    prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blueGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blue),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter your last name';
-                    }
-                    return null;
-                  },
+                  labelText: "Last Name",
+                  icon: Icons.person_outline,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter your last name'
+                      : null,
                 ),
                 const SizedBox(height: 20),
-                // Username field
-                TextFormField(
+                _buildTextField(
                   controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: "Username",
-                    prefixIcon: const Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blueGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blue),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter your username';
-                    }
-                    return null;
-                  },
+                  labelText: "Username",
+                  icon: Icons.person,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter your username'
+                      : null,
                 ),
                 const SizedBox(height: 20),
-                // Phone Number Field
-                TextFormField(
+                _buildTextField(
                   controller: _phoneController,
-                  decoration: InputDecoration(
-                    labelText: "Phone Number",
-                    prefixIcon: const Icon(Icons.phone),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blueGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blue),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter your phone number';
-                    }
-                    return null;
-                  },
+                  labelText: "Phone Number",
+                  icon: Icons.phone,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter your phone number'
+                      : null,
                 ),
                 const SizedBox(height: 20),
-                // Password Field
-                TextFormField(
+                _buildPasswordField(
                   controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blueGrey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Colors.blue),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                  ),
+                  labelText: "Password",
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Enter your password'
+                      : null,
+                ),
+                const SizedBox(height: 20),
+                _buildPasswordField(
+                  controller: _confirmPasswordController,
+                  labelText: "Confirm Password",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Enter your password';
+                      return 'Confirm your password';
+                    }
+                    if (value != _passwordController.text) {
+                      return 'Passwords do not match';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
-                // Sign Up Button
+                const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -227,11 +208,10 @@ class _RegisterViewState extends State<RegisterView> {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Colors.blue, // Changed to blue
+                      backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      elevation: 4,
                     ),
                     child: const Text(
                       "Sign Up",
@@ -243,12 +223,63 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    required IconData icon,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      ),
+      validator: validator,
+    );
+  }
+
+  Widget _buildPasswordField({
+    required TextEditingController controller,
+    required String labelText,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: _obscurePassword,
+      decoration: InputDecoration(
+        labelText: labelText,
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscurePassword = !_obscurePassword;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      ),
+      validator: validator,
     );
   }
 }
