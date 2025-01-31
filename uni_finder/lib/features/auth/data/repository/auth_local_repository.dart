@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 
-import '../../../../../core/error/failure.dart';
-import '../../../domain/entity/auth_entity.dart';
-import '../../../domain/repository/auth_repository.dart';
-import '../../data_source/auth_local_data_source/auth_local_data_source.dart';
+import '../../../../core/error/failure.dart';
+import '../../domain/entity/auth_entity.dart';
+import '../../domain/repository/auth_repository.dart';
+import '../data_source/auth_local_datasource/auth_local_datasource.dart';
 
 class AuthLocalRepository implements IAuthRepository {
   final AuthLocalDataSource _authLocalDataSource;
@@ -23,12 +23,12 @@ class AuthLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> loginStudent(
-    String username,
+  Future<Either<Failure, String>> logincustomer(
+    String email,
     String password,
   ) async {
     try {
-      final token = await _authLocalDataSource.loginStudent(username, password);
+      final token = await _authLocalDataSource.logincustomer(email, password);
       return Right(token);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
@@ -36,9 +36,9 @@ class AuthLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> registerStudent(AuthEntity user) async {
+  Future<Either<Failure, void>> registercustomer(AuthEntity customer) async {
     try {
-      return Right(_authLocalDataSource.registerStudent(user));
+      return Right(_authLocalDataSource.registercustomer(customer));
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
@@ -47,18 +47,6 @@ class AuthLocalRepository implements IAuthRepository {
   @override
   Future<Either<Failure, String>> uploadProfilePicture(File file) async {
     // TODO: implement uploadProfilePicture
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, String>> loginUser(String phone, String password) {
-    // TODO: implement loginUser
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, void>> registerUser(AuthEntity user) {
-    // TODO: implement registerUser
     throw UnimplementedError();
   }
 }

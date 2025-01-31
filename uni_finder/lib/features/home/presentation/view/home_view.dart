@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/common/snackbar/my_snackbar.dart';
+import '../../../../core/common/snack_bar/my_snackbar.dart';
 import '../view_model/home_cubit.dart';
 import '../view_model/home_state.dart';
 
@@ -50,24 +50,29 @@ class HomeView extends StatelessWidget {
           return BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard),
-                label: 'Dashboard',
+                icon: Icon(Icons.home),
+                label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.book),
-                label: 'Course',
+                icon: Icon(Icons.search),
+                label: "Search",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.group),
-                label: 'Batch',
+                icon: Icon(Icons.qr_code_scanner),
+                label: "Scan QR",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: 'Account',
+                icon: Icon(Icons.notifications),
+                label: "Notifications",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: "Settings",
               ),
             ],
             currentIndex: state.selectedIndex,
-            selectedItemColor: Colors.white,
+            selectedItemColor: Colors.green,
+            unselectedItemColor: Colors.grey,
             onTap: (index) {
               context.read<HomeCubit>().onTabTapped(index);
             },

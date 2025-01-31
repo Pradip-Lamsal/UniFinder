@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../app/usecase/usecase.dart';
+import '../../../../app/use_case/use_case.dart';
 import '../../../../core/error/failure.dart';
 import '../repository/auth_repository.dart';
 
@@ -31,6 +31,6 @@ class LoginUseCase implements UsecaseWithParams<String, LoginParams> {
   @override
   Future<Either<Failure, String>> call(LoginParams params) {
     // IF api then store token in shared preferences
-    return repository.loginUser(params.username, params.password);
+    return repository.logincustomer(params.username, params.password);
   }
 }

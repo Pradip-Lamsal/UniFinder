@@ -2,55 +2,75 @@ import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../app/constants/hive_table_constant.dart';
 import '../../domain/entity/auth_entity.dart';
 
 part 'auth_hive_model.g.dart';
 
-@HiveType(typeId: 1) // Replace with a unique ID if not using HiveTableConstant
+@HiveType(typeId: HiveTableConstant.customerTableId)
 class AuthHiveModel extends Equatable {
   @HiveField(0)
-  final String userId;
+  final String? customerId;
   @HiveField(1)
-  final String password;
+  final String fName;
   @HiveField(2)
-  final String email;
+  final String lName;
   @HiveField(3)
+  final String? image;
+  @HiveField(4)
+  final String phone;
+  @HiveField(5)
   final String username;
+  @HiveField(8)
+  final String password;
 
   AuthHiveModel({
-    String? userId,
+    String? customerId,
+    required this.fName,
+    required this.lName,
+    this.image,
+    required this.phone,
     required this.username,
     required this.password,
-    required this.email,
-  }) : userId = userId ?? const Uuid().v4();
+  }) : customerId = customerId ?? const Uuid().v4();
 
   // Initial Constructor
   const AuthHiveModel.initial()
-      : userId = '',
+      : customerId = '',
+        fName = '',
+        lName = '',
+        image = '',
+        phone = '',
         username = '',
-        password = '',
-        email = '';
+        password = '';
 
   // From Entity
   factory AuthHiveModel.fromEntity(AuthEntity entity) {
     return AuthHiveModel(
-      userId: entity.userId,
+      customerId: entity.userId,
+      fName: entity.fName,
+      lName: entity.lName,
+      image: entity.image,
+      phone: entity.phone,
       username: entity.username,
       password: entity.password,
-      email: entity.email,
     );
   }
 
   // To Entity
   AuthEntity toEntity() {
     return AuthEntity(
-      userId: userId,
+      userId: customerId,
+      fName: fName,
+      lName: lName,
+      image: image,
+      phone: phone,
       username: username,
       password: password,
-      email: email,
     );
   }
 
   @override
-  List<Object?> get props => [userId, username, password, email];
+  List<Object?> get props =>
+      [customerId, fName, lName, image, username, password];
 }
