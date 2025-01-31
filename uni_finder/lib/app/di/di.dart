@@ -9,6 +9,7 @@ import '../../features/auth/data/repository/auth_local_repository.dart';
 import '../../features/auth/data/repository/auth_remote_repository.dart';
 import '../../features/auth/domain/use_case/login_usecase.dart';
 import '../../features/auth/domain/use_case/register_user_usecase.dart';
+import '../../features/auth/domain/use_case/upload_image_usecase.dart';
 import '../../features/auth/presentation/view_model/login/login_bloc.dart';
 import '../../features/auth/presentation/view_model/signup/register_bloc.dart';
 import '../../features/home/presentation/view_model/home_cubit.dart';
@@ -55,6 +56,12 @@ _initRegisterDependencies() {
   // register use usecase
   getIt.registerLazySingleton<RegisterUseCase>(
     () => RegisterUseCase(
+      getIt<AuthRemoteRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<UploadImageUsecase>(
+    () => UploadImageUsecase(
       getIt<AuthRemoteRepository>(),
     ),
   );

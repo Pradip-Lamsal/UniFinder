@@ -47,7 +47,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
   Future<void> registercustomer(AuthEntity user) async {
     try {
       Response response = await _dio.post(
-        ApiEndpoints.signup,
+        ApiEndpoints.register,
         data: {
           "fName": user.fName,
           "lName": user.lName,
