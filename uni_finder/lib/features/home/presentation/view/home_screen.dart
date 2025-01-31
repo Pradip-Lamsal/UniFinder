@@ -30,9 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
           _selectedIndex == 0
               ? 'Welcome to UniFinder!'
               : _selectedIndex == 1
-                  ? 'Explore Instrument Rentals'
+                  ? 'Explore Universities'
                   : _selectedIndex == 2
-                      ? 'Your Cart is Empty'
+                      ? 'In progress'
                       : 'Profile Settings',
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
@@ -48,10 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.library_music),
             label: 'University',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Profile',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.shopping_cart),
+          //   label: 'Profile',
+          //),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

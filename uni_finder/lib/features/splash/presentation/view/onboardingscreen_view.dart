@@ -64,7 +64,7 @@ class _OnboardingScreenViewState extends State<OnboardingScreenView> {
           _buildPage(
             image: 'assets/images/logo.png',
             title: 'Welcome to UniFinder',
-            description: 'Find your perfect instrument, play and learn',
+            description: 'Find your perfect University',
           ),
           _buildPage(
             image: 'assets/images/covdrum.jpg',
