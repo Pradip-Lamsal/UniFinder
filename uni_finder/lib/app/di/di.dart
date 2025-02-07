@@ -1,5 +1,7 @@
+import 'package:bus_application/app/shared_prefs/token_shared_prefs.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/network/api_service.dart';
 import '../../core/network/hive_service.dart';
@@ -25,6 +27,12 @@ Future<void> initDependencies() async {
   await _initLoginDependencies();
   await _initApiService();
   // await _initSplashScreenDependencies();
+  await _initSharedPreferences(); // Add this line
+}
+
+Future<void> _initSharedPreferences() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }
 
 _initApiService() {
@@ -84,6 +92,7 @@ _initLoginDependencies() async {
   getIt.registerLazySingleton<LoginUseCase>(
     () => LoginUseCase(
       getIt<AuthRemoteRepository>(),
+      getIt<TokenSharedPrefs>(),
     ),
   );
 

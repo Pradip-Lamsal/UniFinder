@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart'; // For saving the file locally
 import 'package:permission_handler/permission_handler.dart';
 
 import '../view_model/signup/register_bloc.dart';
@@ -37,12 +38,36 @@ class _RegisterViewState extends State<RegisterView> {
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image != null) {
+        final savedImage = await _saveImageToUploads(image);
         setState(() {
-          _profileImage = File(image.path);
+          _profileImage = savedImage;
         });
       }
     } catch (e) {
       debugPrint("Error selecting image: $e");
+    }
+  }
+
+  Future<File> _saveImageToUploads(XFile image) async {
+    try {
+      // Get the application directory where the file can be saved
+      final directory = await getApplicationDocumentsDirectory();
+      final uploadsFolder = Directory('${directory.path}/uploads');
+
+      // Create the uploads folder if it doesn't exist
+      if (!uploadsFolder.existsSync()) {
+        uploadsFolder.createSync(recursive: true);
+      }
+
+      // Save the image to the uploads folder
+      final imagePath =
+          '${uploadsFolder.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final savedImage = await File(image.path).copy(imagePath);
+
+      return savedImage;
+    } catch (e) {
+      debugPrint("Error saving image: $e");
+      rethrow;
     }
   }
 
@@ -202,6 +227,8 @@ class _RegisterViewState extends State<RegisterView> {
                                 phone: _phoneController.text,
                                 username: _usernameController.text,
                                 password: _passwordController.text,
+
+                                // * validate password 2 here and add image container
                               ),
                             );
                       }
