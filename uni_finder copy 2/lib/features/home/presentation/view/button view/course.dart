@@ -181,15 +181,15 @@ class CoursesView extends StatelessWidget {
                   const SizedBox(height: 8),
                   _buildDetailRow(
                     Icons.category,
-                    "Category",
+                    "Course Category",
                     course.courseCategory,
                     context,
                   ),
                   const SizedBox(height: 8),
                   _buildDetailRow(
                     Icons.person,
-                    "Instructor",
-                    course.instructor ?? "Not available",
+                    "Course Duration",
+                    course.courseDuration,
                     context,
                   ),
                 ],
