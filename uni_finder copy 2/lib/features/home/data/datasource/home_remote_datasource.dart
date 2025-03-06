@@ -8,6 +8,7 @@ class HomeRemoteDataSource {
   Future<List<dynamic>> fetchUniversities() async {
     final url =
         Uri.parse('${ApiEndpoints.baseUrl}${ApiEndpoints.universities}');
+    print(url);
 
     try {
       final response = await http.get(url);
@@ -15,6 +16,7 @@ class HomeRemoteDataSource {
       if (response.statusCode == 200) {
         // Decode JSON response properly
         List<dynamic> universities = jsonDecode(response.body);
+        print(universities);
         return universities;
       } else {
         throw Exception("Failed to load universities: ${response.statusCode}");
@@ -33,6 +35,7 @@ class HomeRemoteDataSource {
       if (response.statusCode == 200) {
         // Decode JSON response properly
         List<dynamic> course = jsonDecode(response.body);
+        print(course);
         return course;
       } else {
         throw Exception("Failed to load courses: ${response.statusCode}");
@@ -48,6 +51,7 @@ class HomeRemoteDataSource {
 
     try {
       final response = await http.get(url);
+      // print(response);
 
       if (response.statusCode == 200) {
         // Decode JSON response properly
