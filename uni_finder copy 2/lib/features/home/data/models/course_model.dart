@@ -14,18 +14,21 @@ class CourseModel extends HiveObject {
 
   @HiveField(2)
   final String courseCategory;
+  @HiveField(3)
+  final String courseDuration;
 
-  CourseModel({
-    required this.id,
-    required this.courseType,
-    required this.courseCategory,
-  });
+  CourseModel(
+      {required this.id,
+      required this.courseType,
+      required this.courseCategory,
+      required this.courseDuration});
 
   factory CourseModel.fromEntity(Course course) {
     return CourseModel(
       id: course.id,
       courseType: course.courseType,
       courseCategory: course.courseCategory,
+      courseDuration: course.courseDuration,
     );
   }
 
@@ -35,6 +38,7 @@ class CourseModel extends HiveObject {
       id: json['id'] as String,
       courseType: json['courseType'] as String,
       courseCategory: json['courseCategory'] as String,
+      courseDuration: json['courseDuration'] as String,
     );
   }
 
@@ -43,6 +47,7 @@ class CourseModel extends HiveObject {
       id: id,
       courseType: courseType,
       courseCategory: courseCategory,
+      courseDuration: courseDuration,
     );
   }
 }
