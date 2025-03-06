@@ -27,6 +27,7 @@ class UniversitiesBloc extends Bloc<UniversitiesEvent, UniversitiesState> {
       SelectUniversity event, Emitter<UniversitiesState> emit) {
     if (state is UniversitiesLoaded) {
       final currentState = state as UniversitiesLoaded;
+      print(UniversitiesLoaded);
       emit(UniversitiesLoaded(currentState.universities,
           selectedUniversity: event.university));
     }
