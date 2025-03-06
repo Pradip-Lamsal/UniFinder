@@ -41,6 +41,9 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
             courseCategory: json['courseCategory'] ??
                 json['category'] as String? ??
                 'Unknown Category',
+            courseDuration: json['courseDuration'] ??
+                json['category'] as String? ??
+                'Unknown Category',
           );
         }
       }).toList();
