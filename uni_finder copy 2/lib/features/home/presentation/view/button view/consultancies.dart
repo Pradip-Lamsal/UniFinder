@@ -207,9 +207,25 @@ class ConsultanciesView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   _buildDetailRow(
-                    Icons.email,
+                    Icons.phone,
                     "Contact",
                     consultancy["contact"] ?? "Not available",
+                    context,
+                  ),
+                  const SizedBox(height: 8),
+                  _buildDetailRow(
+                    Icons.description,
+                    "Description",
+                    consultancy["description"] ?? "Not available",
+                    context,
+                  ),
+                  const SizedBox(height: 8),
+                  _buildDetailRow(
+                    Icons.email,
+                    "Courses",
+                    (consultancy["services"] as List<dynamic>).isNotEmpty
+                        ? (consultancy["services"] as List<dynamic>).join(", ")
+                        : "Not available",
                     context,
                   ),
                 ],
