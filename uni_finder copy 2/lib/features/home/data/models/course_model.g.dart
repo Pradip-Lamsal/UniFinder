@@ -20,6 +20,7 @@ class CourseModelAdapter extends TypeAdapter<CourseModel> {
       id: fields[0] as String,
       courseType: fields[1] as String,
       courseCategory: fields[2] as String,
+      courseDuration: fields[3] as String,
     );
   }
 
